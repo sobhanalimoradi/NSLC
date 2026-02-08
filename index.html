@@ -8,19 +8,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        /* Before/After Slider Styling */
         .slider-container { position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; border-radius: 1.5rem; }
         .img-before { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
         .img-after { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; clip-path: inset(0 0 0 50%); }
-        .slider-handle { 
-            position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; background: white; 
-            cursor: ew-resize; transform: translateX(-50%); z-index: 10;
-        }
-        .slider-handle::after {
-            content: '↔'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 44px; height: 44px; background: white; color: #166534; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center; font-weight: 800; shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
+        .slider-handle { position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; background: white; cursor: ew-resize; transform: translateX(-50%); z-index: 10; }
+        .slider-handle::after { content: '↔'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 44px; height: 44px; background: white; color: #166534; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; shadow: 0 4px 15px rgba(0,0,0,0.3); }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
     </style>
@@ -56,9 +48,9 @@
                 <span class="absolute bottom-4 right-4 bg-green-700/80 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded font-bold uppercase">After</span>
             </div>
 
-            <div class="bg-green-700 p-8 rounded-3xl text-white shadow-xl shadow-green-200 text-center">
+            <div class="bg-green-700 p-8 rounded-3xl text-white shadow-xl shadow-green-200 text-center text-sm font-bold">
                 <h3 class="font-extrabold text-xl mb-1">Ready for a better lawn?</h3>
-                <p class="text-green-100 text-sm mb-6">Contact us for a free quote (AUD).</p>
+                <p class="text-green-100 mb-6">Contact us for a free quote (AUD).</p>
                 <a href="tel:0400000000" class="block w-full bg-white text-green-700 py-4 rounded-xl font-extrabold shadow-lg">Call NSLC Today</a>
             </div>
         </div>
@@ -80,27 +72,27 @@
                 <div class="grid grid-cols-2 gap-4 text-sm mb-4">
                     <div>
                         <label class="block text-[10px] uppercase font-bold text-green-600 mb-1">Lawn Size (m²)</label>
-                        <input type="number" id="sqm" oninput="calc()" placeholder="300" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-green-400">
+                        <input type="number" id="sqm" oninput="calc()" placeholder="300" class="w-full p-3 border rounded-xl outline-none">
                     </div>
                     <div>
                         <label class="block text-[10px] uppercase font-bold text-green-600 mb-1">Difficulty (1-3)</label>
-                        <input type="number" id="complex" oninput="calc()" value="1" min="1" max="3" class="w-full p-3 border rounded-xl outline-none focus:ring-2 focus:ring-green-400">
+                        <input type="number" id="complex" oninput="calc()" value="1" min="1" max="3" class="w-full p-3 border rounded-xl outline-none">
                     </div>
                 </div>
 
                 <div class="space-y-2 mb-4">
-                    <label class="block text-[10px] uppercase font-bold text-green-600 mb-1">Add-ons</label>
+                    <label class="block text-[10px] uppercase font-bold text-green-600 mb-1 text-sm">Add-ons (AUD)</label>
                     <label class="flex items-center justify-between bg-white p-3 rounded-xl border text-sm">
                         <span>🌿 Hedge Trimming</span>
                         <input type="checkbox" id="addHedge" onchange="calc()" class="w-5 h-5 accent-green-600">
                     </label>
                     <label class="flex items-center justify-between bg-white p-3 rounded-xl border text-sm">
-                        <span>🍂 Green Waste Removal</span>
-                        <input type="checkbox" id="addWaste" onchange="calc()" class="w-5 h-5 accent-green-600">
+                        <span>✂️ Weed Whacker (Edging)</span>
+                        <input type="checkbox" id="addWhacker" onchange="calc()" class="w-5 h-5 accent-green-600">
                     </label>
                     <label class="flex items-center justify-between bg-white p-3 rounded-xl border text-sm">
-                        <span>💊 Weed Spraying</span>
-                        <input type="checkbox" id="addWeed" onchange="calc()" class="w-5 h-5 accent-green-600">
+                        <span>🤲 Hand Weeding</span>
+                        <input type="checkbox" id="addWeeding" onchange="calc()" class="w-5 h-5 accent-green-600">
                     </label>
                 </div>
 
@@ -114,7 +106,7 @@
                 <h2 class="font-extrabold text-slate-800 flex items-center gap-2">✍️ Log Job Details</h2>
                 <input type="text" id="workerName" placeholder="Your Name" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:border-green-600">
                 <input type="text" id="clientName" placeholder="Client Name & Address" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:border-green-600">
-                <textarea id="serviceList" rows="3" placeholder="List services provided (e.g. Front lawn, sprayed driveway...)" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:border-green-600"></textarea>
+                <textarea id="serviceList" rows="3" placeholder="Services performed..." class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:border-green-600"></textarea>
                 
                 <div class="relative">
                     <span class="absolute left-4 top-4 font-bold text-slate-400">$</span>
@@ -131,9 +123,8 @@
 
     <script>
         const MASTER_PIN = "0912"; 
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxe5BbOmFDD1wTz1j757SkNZQgGHUgCi9bE2kTPmEgFLPE82n2HsWHFnxLB8X7UhEdg/exec"; // PASTE YOUR GOOGLE WEB APP URL HERE
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxe5BbOmFDD1wTz1j757SkNZQgGHUgCi9bE2kTPmEgFLPE82n2HsWHFnxLB8X7UhEdg/exec"; 
 
-        // TAB SWITCHING
         function switchTab(tab) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
             if(tab === 'worker') {
@@ -141,7 +132,6 @@
             } else {
                 document.getElementById('public').classList.add('active');
             }
-
             const pubBtn = document.getElementById('btn-public');
             const workBtn = document.getElementById('btn-worker');
             if(tab === 'public') {
@@ -153,10 +143,8 @@
             }
         }
 
-        // PIN AUTH
         function checkPin() {
-            const input = document.getElementById('pinInput').value;
-            if(input === MASTER_PIN) {
+            if(document.getElementById('pinInput').value === MASTER_PIN) {
                 document.getElementById('auth').classList.remove('active');
                 document.getElementById('worker').classList.add('active');
             } else {
@@ -165,25 +153,23 @@
             }
         }
 
-        // JOB CALCULATOR MATH (30% DISCOUNT MODEL)
         function calc() {
             const sqm = document.getElementById('sqm').value || 0;
             const complexity = document.getElementById('complex').value || 1;
             
-            // Base Mowing Logic
+            // Base Mowing: $35 base + $0.05 per m2
             let total = (35 + (sqm * 0.05)) * complexity;
 
-            // Add-ons
+            // Add-ons (AUD)
             if(document.getElementById('addHedge').checked) total += 25;
-            if(document.getElementById('addWaste').checked) total += 15;
-            if(document.getElementById('addWeed').checked)  total += 10;
+            if(document.getElementById('addWhacker').checked) total += 15; // Weed whacker fee
+            if(document.getElementById('addWeeding').checked) total += 10; // Hand weeding fee
 
             const finalPrice = Math.round(total);
             document.getElementById('suggested').innerText = finalPrice;
             document.getElementById('price').value = finalPrice;
         }
 
-        // GOOGLE SHEETS SYNC
         async function submitJob() {
             const btn = document.getElementById('btn');
             const payload = {
@@ -192,12 +178,9 @@
                 services: document.getElementById('serviceList').value,
                 price: document.getElementById('price').value
             };
-
-            if(!payload.name || !payload.worker) return alert("Worker Name and Client info required.");
-            
+            if(!payload.name || !payload.worker) return alert("Fill in info.");
             btn.disabled = true;
-            btn.innerText = "Syncing Data...";
-
+            btn.innerText = "Syncing...";
             try {
                 await fetch(WEB_APP_URL, {
                     method: "POST",
@@ -205,16 +188,15 @@
                     headers: { "Content-Type": "text/plain" },
                     body: JSON.stringify(payload)
                 });
-                alert("Job Logged Successfully!");
+                alert("Synced!");
                 location.reload();
             } catch (e) {
-                alert("Connection Error. Check URL.");
+                alert("Error! Check URL.");
                 btn.disabled = false;
-                btn.innerText = "Retry Sync";
             }
         }
 
-        // BEFORE/AFTER SLIDER LOGIC
+        // Slider logic
         const slider = document.getElementById('nslcSlider');
         const handle = slider.querySelector('.slider-handle');
         const imgAfter = slider.querySelector('.img-after');
