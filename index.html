@@ -1,0 +1,54 @@
+<body class="bg-gray-50 p-4">
+    <div class="max-w-md mx-auto bg-white p-6 rounded-xl shadow-lg">
+        <h1 class="text-2xl font-bold text-green-800 mb-6">Worker Portal</h1>
+        
+        <input type="text" id="workerName" placeholder="Your Name" class="w-full p-2 border mb-4 rounded">
+
+        <hr class="my-4">
+
+        <input type="text" id="clientName" placeholder="Client Name" class="w-full p-2 border mb-2 rounded">
+        <input type="text" id="address" placeholder="Client Address" class="w-full p-2 border mb-4 rounded">
+
+        <label class="block text-sm font-bold mb-1">Services Requested:</label>
+        <textarea id="serviceList" rows="3" placeholder="Ex: Mow front/back, Trim hedges, Fertilize" 
+                  class="w-full p-2 border rounded mb-4"></textarea>
+
+        <input type="number" id="price" placeholder="Total Price ($)" class="w-full p-2 border mb-6 rounded">
+
+        <button onclick="submitJob()" id="btn" class="w-full bg-green-600 text-white py-4 rounded-lg font-bold">
+            Submit & Sync to Office
+        </button>
+    </div>
+
+    <script>
+        const WEB_APP_URL = "PASTE_YOUR_GOOGLE_SCRIPT_URL_HERE";
+
+        async function submitJob() {
+            const btn = document.getElementById('btn');
+            const payload = {
+                worker: document.getElementById('workerName').value,
+                name: document.getElementById('clientName').value,
+                address: document.getElementById('address').value,
+                services: document.getElementById('serviceList').value,
+                price: document.getElementById('price').value
+            };
+
+            if(!payload.name || !payload.worker) return alert("Fill in Name and Worker!");
+
+            btn.innerText = "Syncing...";
+            btn.disabled = true;
+
+            try {
+                await fetch(WEB_APP_URL, {
+                    method: "POST",
+                    body: JSON.stringify(payload)
+                });
+                alert("Job Saved! All workers can see this in the sheet.");
+                location.reload(); 
+            } catch (e) {
+                alert("Error syncing data. Check internet.");
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
