@@ -3,122 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NSLC worker portal</title>
+    <title>NSLC Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Inter', sans-serif; }
-        .input-group { @apply flex flex-col space-y-1.5 mb-6; }
-        input, textarea { @apply w-full p-4 bg-white border border-slate-200 rounded-xl shadow-sm focus:ring-4 focus:ring-green-100 focus:border-green-500 outline-none transition-all text-slate-700; }
-        label { @apply text-sm font-extrabold text-slate-500 uppercase tracking-wider ml-1; }
+        /* Slider Styling */
+        .slider-container { position: relative; width: 100%; aspect-ratio: 16/9; overflow: hidden; border-radius: 1.5rem; }
+        .img-before { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
+        .img-after { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; clip-path: inset(0 0 0 50%); }
+        .slider-handle { 
+            position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; background: white; 
+            cursor: ew-resize; transform: translateX(-50%); z-index: 10;
+        }
+        .slider-handle::after {
+            content: '↔'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 44px; height: 44px; background: white; color: #166534; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-weight: 800; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen">
+<body class="bg-slate-50 min-h-screen pb-20 text-slate-900">
 
-    <header class="bg-white border-b border-slate-200 p-6 sticky top-0 z-50">
-        <div class="max-w-md mx-auto flex items-center justify-between">
+    <nav class="bg-white border-b p-6 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-md mx-auto flex justify-between items-center">
             <div>
-                <h1 class="text-xl font-extrabold text-green-700 leading-none">LawnPro</h1>
-                <p class="text-xs text-slate-400 mt-1 font-bold tracking-widest uppercase">Worker Portal</p>
+                <h1 class="text-2xl font-extrabold text-green-800 tracking-tighter">NSLC</h1>
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Lawn Care Services</p>
             </div>
-            <div class="h-10 w-10 bg-green-100 rounded-full flex items-center justify-center text-green-700 font-bold">
-                NSLC
-            </div>
+            <span class="bg-green-600 text-white text-[10px] px-3 py-1 rounded-full font-bold uppercase shadow-lg shadow-green-100">Live Portal</span>
         </div>
-    </header>
+    </nav>
 
-    <main class="max-w-md mx-auto p-6 pb-24">
-        
-        <div class="space-y-2">
-            
-            <div class="input-group">
-                <label>Worker Name</label>
-                <input type="text" id="workerName" placeholder="e.g. Mike Smith">
+    <main class="max-w-md mx-auto p-6 space-y-10">
+
+        <section>
+            <h2 class="text-sm font-extrabold text-slate-400 uppercase tracking-widest mb-4">Featured Work</h2>
+            <div class="slider-container shadow-2xl border-4 border-white" id="nslcSlider">
+                <img src="https://images.unsplash.com/photo-1558905619-1735bc2f19d2?q=80&w=800" alt="Before" class="img-before">
+                <img src="https://images.unsplash.com/photo-1592150621344-828ec189028b?q=80&w=800" alt="After" class="img-after">
+                <div class="slider-handle"></div>
+                <span class="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded font-bold uppercase">Before</span>
+                <span class="absolute bottom-4 right-4 bg-green-700/80 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded font-bold uppercase">After</span>
             </div>
+        </section>
 
-            <hr class="border-slate-200 mb-8 mt-2">
-
-            <div class="input-group">
-                <label>Customer Name</label>
-                <input type="text" id="clientName" placeholder="e.g. Sarah Johnson">
-            </div>
-
-            <div class="input-group">
-                <label>Job Address</label>
-                <input type="text" id="address" placeholder="123 Greenway Ln">
-            </div>
-
-            <div class="input-group">
-                <label>Services Performed</label>
-                <textarea id="serviceList" rows="4" placeholder="Be specific: 'Mowed back, trimmed edges, blew clippings off driveway'"></textarea>
-            </div>
-
-            <div class="input-group">
-                <label>Total Job Cost ($)</label>
-                <input type="number" id="price" placeholder="0.00">
-            </div>
-
-            <button onclick="submitJob()" id="btn" class="w-full bg-green-600 hover:bg-green-700 active:scale-[0.98] text-white py-5 rounded-2xl font-extrabold text-lg shadow-xl shadow-green-200 transition-all flex items-center justify-center gap-2">
-                <span id="btnIcon">📤</span>
-                <span id="btnText">Submit & Sync</span>
-            </button>
-            
-            <p class="text-center text-slate-400 text-xs mt-6">
-                Data is shared instantly with the main spreadsheet.
-            </p>
-        </div>
-    </main>
-
-    <script>
-        const WEB_APP_URL = "YOUR_URL_HERE"; // PASTE YOUR URL HERE
-
-        async function submitJob() {
-            const btn = document.getElementById('btn');
-            const btnText = document.getElementById('btnText');
-            const btnIcon = document.getElementById('btnIcon');
-            
-            const payload = {
-                worker: document.getElementById('workerName').value,
-                name: document.getElementById('clientName').value,
-                address: document.getElementById('address').value,
-                services: document.getElementById('serviceList').value,
-                price: document.getElementById('price').value
-            };
-
-            if(!payload.name || !payload.worker) {
-                alert("Please enter both Worker Name and Customer Name.");
-                return;
-            }
-
-            // UI Loading State
-            btnText.innerText = "Syncing...";
-            btnIcon.innerText = "⏳";
-            btn.classList.replace('bg-green-600', 'bg-slate-400');
-            btn.disabled = true;
-
-            try {
-                await fetch(WEB_APP_URL, {
-                    method: "POST",
-                    mode: "no-cors", 
-                    headers: { "Content-Type": "text/plain" }, 
-                    body: JSON.stringify(payload)
-                });
-                
-                btnText.innerText = "Success!";
-                btnIcon.innerText = "✅";
-                btn.classList.replace('bg-slate-400', 'bg-emerald-500');
-                
-                setTimeout(() => {
-                    location.reload(); 
-                }, 1500);
-
-            } catch (e) {
-                alert("Sync Error: Check internet connection.");
-                btn.disabled = false;
-                btnText.innerText = "Retry Sync";
-                btn.classList.replace('bg-slate-400', 'bg-red-500');
-            }
-        }
-    </script>
-</body>
-</html>
+        <section class="bg-white p-6 rounded-3xl shadow-xl
