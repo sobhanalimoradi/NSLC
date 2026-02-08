@@ -23,11 +23,10 @@
         <div class="max-w-md mx-auto flex justify-between items-center">
             <div>
                 <h1 class="text-2xl font-extrabold text-green-800 tracking-tighter">NSLC</h1>
-                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Lawn Care Services</p>
             </div>
             <div class="flex bg-slate-100 p-1 rounded-xl">
-                <button onclick="switchTab('public')" id="btn-public" class="px-3 py-1.5 text-[10px] font-bold uppercase rounded-lg transition-all bg-white shadow-sm text-green-700">Client</button>
-                <button onclick="switchTab('worker')" id="btn-worker" class="px-3 py-1.5 text-[10px] font-bold uppercase rounded-lg transition-all text-slate-500">Worker</button>
+                <button onclick="switchTab('public')" id="btn-public" class="px-3 py-1.5 text-[10px] font-bold uppercase rounded-lg transition-all bg-white shadow-sm text-green-700">Client View</button>
+                <button onclick="switchTab('worker')" id="btn-worker" class="px-3 py-1.5 text-[10px] font-bold uppercase rounded-lg transition-all text-slate-500">Worker Log</button>
             </div>
         </div>
     </nav>
@@ -35,101 +34,104 @@
     <main class="max-w-md mx-auto p-6">
 
         <div id="public" class="tab-content active space-y-8">
-            <header>
-                <h2 class="text-3xl font-extrabold text-slate-900 leading-tight">Elite Lawn <br><span class="text-green-600">Transformations.</span></h2>
-                <p class="text-slate-500 mt-2">See why NSLC is the top choice for your neighborhood.</p>
-            </header>
-
+            <h2 class="text-3xl font-extrabold text-slate-900 leading-tight">Elite Results. <br><span class="text-green-600">Local Prices.</span></h2>
             <div class="slider-container shadow-2xl border-4 border-white" id="nslcSlider">
-                <img src="https://images.unsplash.com/photo-1558905619-1735bc2f19d2?q=80&w=800" alt="Before" class="img-before">
-                <img src="https://images.unsplash.com/photo-1592150621344-828ec189028b?q=80&w=800" alt="After" class="img-after">
+                <img src="https://images.unsplash.com/photo-1558905619-1735bc2f19d2?q=80&w=800" class="img-before">
+                <img src="https://images.unsplash.com/photo-1592150621344-828ec189028b?q=80&w=800" class="img-after">
                 <div class="slider-handle"></div>
-                <span class="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded font-bold uppercase">Before</span>
-                <span class="absolute bottom-4 right-4 bg-green-700/80 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded font-bold uppercase">After</span>
             </div>
-
-            <div class="bg-green-700 p-8 rounded-3xl text-white shadow-xl shadow-green-200">
-                <h3 class="font-extrabold text-xl mb-2">Ready for a better lawn?</h3>
-                <p class="text-green-100 text-sm mb-6">Contact us today for a free estimate on your property.</p>
-                <a href="tel:0480466086" class="block w-full bg-white text-green-700 text-center py-4 rounded-xl font-extrabold">Call Now</a>
+            <div class="bg-green-700 p-6 rounded-2xl text-white">
+                <p class="font-bold mb-1">Affordable Australian Lawn Care</p>
+                <p class="text-sm opacity-90 mb-4">Quality service without the premium price tag.</p>
+                <a href="tel:0470419314" class="block w-full bg-white text-green-700 text-center py-3 rounded-xl font-bold">Call for Estimate</a>
             </div>
         </div>
 
-        <div id="worker" class="tab-content space-y-6">
-            <div class="bg-white p-6 rounded-3xl shadow-xl border border-slate-100">
-                <h2 class="text-xl font-extrabold text-slate-800 mb-6 flex items-center gap-2">
-                   🛠️ Worker Job Log
-                </h2>
-                
-                <div class="space-y-4">
-                    <input type="text" id="workerName" placeholder="Your Name" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:border-green-600 transition-all">
-                    <input type="text" id="clientName" placeholder="Client Name & Address" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:border-green-600 transition-all">
-                    <textarea id="serviceList" rows="4" placeholder="List services provided..." class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:border-green-600 transition-all"></textarea>
-                    <input type="number" id="price" placeholder="Job Price ($)" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:border-green-600 transition-all">
+        <div id="auth" class="tab-content space-y-4 pt-10">
+            <h2 class="text-center font-bold text-slate-400 uppercase text-xs">Enter Worker PIN</h2>
+            <input type="password" id="pinInput" placeholder="••••" maxlength="4" class="w-full p-4 text-center text-3xl border rounded-2xl tracking-widest outline-none focus:border-green-600">
+            <button onclick="checkPin()" class="w-full bg-slate-800 text-white py-4 rounded-xl font-bold active:scale-95 transition-all">Unlock Portal</button>
+        </div>
 
-                    <button onclick="submitJob()" id="btn" class="w-full bg-green-700 text-white py-5 rounded-2xl font-bold text-lg shadow-xl shadow-green-200 transition-all flex items-center justify-center gap-3">
-                        <span id="btnIcon">📤</span>
-                        <span id="btnText">Sync to NSLC Database</span>
-                    </button>
+        <div id="worker" class="tab-content space-y-6">
+            
+            <div class="bg-green-50 p-6 rounded-3xl border border-green-100 shadow-sm">
+                <h3 class="font-bold text-green-800 mb-4 flex items-center gap-2">🇦🇺 AUD Job Calculator</h3>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <label class="block text-[10px] uppercase font-bold text-green-600">Yard Size (m²)</label>
+                        <input type="number" id="sqm" oninput="calc()" placeholder="300" class="w-full p-2 border rounded-lg">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] uppercase font-bold text-green-600">Difficulty (1-3)</label>
+                        <input type="number" id="complex" oninput="calc()" value="1" min="1" max="3" class="w-full p-2 border rounded-lg">
+                    </div>
                 </div>
+                <p class="mt-4 text-2xl font-black text-green-700">Estimated: $<span id="suggested">0</span> <span class="text-sm font-normal">AUD</span></p>
+                <p class="text-[10px] text-green-600 mt-1 italic">*Formula optimized for 30% below market average.</p>
+            </div>
+
+            <div class="bg-white p-6 rounded-3xl shadow-xl border border-slate-100 space-y-4">
+                <h2 class="font-extrabold text-slate-800 text-lg">Log Completed Job</h2>
+                <input type="text" id="workerName" placeholder="Worker Name" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:border-green-600">
+                <input type="text" id="clientName" placeholder="Client & Address" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:border-green-600">
+                <textarea id="serviceList" rows="3" placeholder="Services (e.g. Front mow, edges, weed spray)" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:border-green-600"></textarea>
+                <div class="relative">
+                    <span class="absolute left-4 top-4 font-bold text-slate-400">$</span>
+                    <input type="number" id="price" placeholder="Total Charged (AUD)" class="w-full p-4 pl-8 bg-slate-50 border rounded-2xl font-bold text-green-700 outline-none focus:border-green-600">
+                </div>
+                <button onclick="submitJob()" id="btn" class="w-full bg-green-700 text-white py-5 rounded-2xl font-bold text-lg shadow-lg active:scale-95 transition-all">
+                    Sync to NSLC Cloud
+                </button>
             </div>
         </div>
 
     </main>
 
     <script>
-        // --- 1. TAB SWITCHING LOGIC ---
+        const MASTER_PIN = "0912"; 
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxe5BbOmFDD1wTz1j757SkNZQgGHUgCi9bE2kTPmEgFLPE82n2HsWHFnxLB8X7UhEdg/exec"; 
+
         function switchTab(tab) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-            document.getElementById(tab).classList.add('active');
-
-            const pubBtn = document.getElementById('btn-public');
-            const workBtn = document.getElementById('btn-worker');
-
-            if(tab === 'public') {
-                pubBtn.className = "px-3 py-1.5 text-[10px] font-bold uppercase rounded-lg transition-all bg-white shadow-sm text-green-700";
-                workBtn.className = "px-3 py-1.5 text-[10px] font-bold uppercase rounded-lg transition-all text-slate-500";
+            if(tab === 'worker') {
+                document.getElementById('auth').classList.add('active');
             } else {
-                workBtn.className = "px-3 py-1.5 text-[10px] font-bold uppercase rounded-lg transition-all bg-white shadow-sm text-green-700";
-                pubBtn.className = "px-3 py-1.5 text-[10px] font-bold uppercase rounded-lg transition-all text-slate-500";
+                document.getElementById('public').classList.add('active');
             }
         }
 
-        // --- 2. SLIDER LOGIC ---
-        const slider = document.getElementById('nslcSlider');
-        const handle = slider.querySelector('.slider-handle');
-        const imgAfter = slider.querySelector('.img-after');
-
-        function moveSlider(e) {
-            const rect = slider.getBoundingClientRect();
-            let pageX = e.pageX || (e.touches ? e.touches[0].pageX : 0);
-            let x = pageX - rect.left;
-            let percent = (x / rect.width) * 100;
-            if (percent < 0) percent = 0;
-            if (percent > 100) percent = 100;
-            handle.style.left = percent + '%';
-            imgAfter.style.clipPath = `inset(0 0 0 ${percent}%)`;
+        function checkPin() {
+            if(document.getElementById('pinInput').value === MASTER_PIN) {
+                document.getElementById('auth').classList.remove('active');
+                document.getElementById('worker').classList.add('active');
+            } else {
+                alert("Access Denied: Incorrect PIN");
+                document.getElementById('pinInput').value = '';
+            }
         }
-        slider.addEventListener('mousemove', moveSlider);
-        slider.addEventListener('touchmove', (e) => { moveSlider(e); e.preventDefault(); }, {passive: false});
 
-        // --- 3. SUBMIT LOGIC ---
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxe5BbOmFDD1wTz1j757SkNZQgGHUgCi9bE2kTPmEgFLPE82n2HsWHFnxLB8X7UhEdg/exec"; 
+        function calc() {
+            const sqm = document.getElementById('sqm').value || 0;
+            const complexity = document.getElementById('complex').value || 1;
+            // Formula: $35 base (lowered) + $0.05 per m2 * complexity
+            // Typical AU rates are $0.10-$0.15 per m2, so $0.05 is significantly cheaper.
+            let total = (35 + (sqm * 0.05)) * complexity;
+            document.getElementById('suggested').innerText = Math.round(total);
+        }
 
         async function submitJob() {
             const btn = document.getElementById('btn');
-            const btnText = document.getElementById('btnText');
             const payload = {
                 worker: document.getElementById('workerName').value,
                 name: document.getElementById('clientName').value,
                 services: document.getElementById('serviceList').value,
                 price: document.getElementById('price').value
             };
-
-            if(!payload.worker || !payload.name) return alert("Fill in info.");
-
+            if(!payload.name || !payload.worker) return alert("Worker and Client names required.");
+            
             btn.disabled = true;
-            btnText.innerText = "Syncing...";
+            btn.innerText = "Processing...";
 
             try {
                 await fetch(WEB_APP_URL, {
@@ -138,13 +140,29 @@
                     headers: { "Content-Type": "text/plain" },
                     body: JSON.stringify(payload)
                 });
-                btnText.innerText = "Success!";
-                setTimeout(() => location.reload(), 2000);
+                alert("Successfully Synced to NSLC Spreadsheet!");
+                location.reload();
             } catch (e) {
-                alert("Error!");
+                alert("Connection Error.");
                 btn.disabled = false;
+                btn.innerText = "Retry Sync";
             }
         }
+
+        // Slider logic
+        const slider = document.getElementById('nslcSlider');
+        const handle = slider.querySelector('.slider-handle');
+        const imgAfter = slider.querySelector('.img-after');
+        function moveSlider(e) {
+            const rect = slider.getBoundingClientRect();
+            let pageX = e.pageX || (e.touches ? e.touches[0].pageX : 0);
+            let percent = ((pageX - rect.left) / rect.width) * 100;
+            percent = Math.max(0, Math.min(100, percent));
+            handle.style.left = percent + '%';
+            imgAfter.style.clipPath = `inset(0 0 0 ${percent}%)`;
+        }
+        slider.addEventListener('mousemove', moveSlider);
+        slider.addEventListener('touchmove', (e) => { moveSlider(e); e.preventDefault(); }, {passive: false});
     </script>
 </body>
 </html>
