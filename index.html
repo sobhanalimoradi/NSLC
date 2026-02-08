@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NSLC Portal</title>
+    <title>NSLC | Professional Lawn Care</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -12,87 +12,95 @@
         .img-before { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; }
         .img-after { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; clip-path: inset(0 0 0 50%); }
         .slider-handle { position: absolute; top: 0; bottom: 0; left: 50%; width: 4px; background: white; cursor: ew-resize; transform: translateX(-50%); z-index: 10; }
-        .slider-handle::after { content: '↔'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 44px; height: 44px; background: white; color: #166534; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .slider-handle::after { content: '↔'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 44px; height: 44px; background: white; color: #166534; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        
+        /* This is what keeps them separate */
+        .page-view { display: none; }
+        .page-view.active { display: block; }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen pb-20 text-slate-900">
+<body class="bg-slate-50 min-h-screen pb-10">
 
     <nav class="bg-white border-b p-6 sticky top-0 z-50 shadow-sm">
         <div class="max-w-md mx-auto flex justify-between items-center">
-            <div>
-                <h1 class="text-2xl font-extrabold text-green-800 tracking-tighter">NSLC</h1>
-                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Lawn Care Services</p>
+            <h1 class="text-2xl font-extrabold text-green-800 tracking-tighter">NSLC</h1>
+            <div class="flex bg-slate-100 p-1 rounded-xl">
+                <button onclick="showPage('client')" id="tab-client" class="px-4 py-2 text-[10px] font-bold uppercase rounded-lg transition-all bg-white shadow-sm text-green-700">Client View</button>
+                <button onclick="showPage('auth')" id="tab-worker" class="px-4 py-2 text-[10px] font-bold uppercase rounded-lg transition-all text-slate-500">Worker Portal</button>
             </div>
-            <span class="bg-green-100 text-green-700 text-[10px] px-3 py-1 rounded-full font-bold uppercase">Live Portal</span>
         </div>
     </nav>
 
-    <main class="max-w-md mx-auto p-6 space-y-12">
+    <main class="max-w-md mx-auto p-6">
 
-        <section class="space-y-6">
-            <h2 class="text-sm font-extrabold text-slate-400 uppercase tracking-widest">Featured Transformation</h2>
+        <div id="page-client" class="page-view active space-y-8">
+            <h2 class="text-3xl font-extrabold text-slate-900 leading-tight">Elite Results.<br><span class="text-green-600">Local Prices.</span></h2>
             <div class="slider-container shadow-2xl border-4 border-white" id="nslcSlider">
                 <img src="pictures/illam.jfif" alt="Before" class="img-before">
                 <img src="pictures/illam2.jfif" alt="After" class="img-after">
                 <div class="slider-handle"></div>
-                <span class="absolute bottom-4 left-4 bg-black/60 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded font-bold uppercase">Before</span>
-                <span class="absolute bottom-4 right-4 bg-green-700/80 backdrop-blur-sm text-white text-[10px] px-2 py-1 rounded font-bold uppercase">After</span>
             </div>
-            <a href="tel:0400000000" class="block w-full bg-green-700 text-white text-center py-4 rounded-2xl font-extrabold shadow-lg shadow-green-100 active:scale-95 transition-all">
-                Call for Estimate
-            </a>
-        </section>
+            <a href="tel:0400000000" class="block w-full bg-green-700 text-white text-center py-4 rounded-xl font-extrabold">Call for Estimate</a>
+        </div>
 
-        <hr class="border-slate-200">
+        <div id="page-auth" class="page-view space-y-6 pt-10 text-center">
+            <h2 class="font-bold text-slate-400 uppercase text-xs tracking-widest">Enter Worker PIN</h2>
+            <input type="password" id="pinInput" placeholder="••••" maxlength="4" class="w-full p-6 text-center text-4xl border rounded-2xl tracking-widest outline-none bg-white">
+            <button onclick="checkPin()" class="w-full bg-slate-800 text-white py-4 rounded-xl font-bold">Unlock</button>
+        </div>
 
-        <section class="space-y-6">
-            <h2 class="text-sm font-extrabold text-slate-400 uppercase tracking-widest">Worker Job Log</h2>
-            
-            <div class="bg-green-50 p-6 rounded-3xl border border-green-100 shadow-sm space-y-4">
-                <h3 class="font-bold text-green-800 flex items-center gap-2">🇦🇺 Price Calculator</h3>
-                <div class="grid grid-cols-2 gap-4">
-                    <input type="number" id="sqm" oninput="calc()" placeholder="Size (m²)" class="w-full p-3 border rounded-xl outline-none">
-                    <input type="number" id="complex" oninput="calc()" value="1" min="1" max="3" class="w-full p-3 border rounded-xl outline-none">
+        <div id="page-worker" class="page-view space-y-6">
+            <div class="bg-green-50 p-6 rounded-3xl border border-green-100">
+                <h3 class="font-bold text-green-800 mb-4">🇦🇺 AUD Job Calculator</h3>
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <input type="number" id="sqm" oninput="calc()" placeholder="m²" class="w-full p-3 border rounded-xl">
+                    <input type="number" id="complex" oninput="calc()" value="1" min="1" max="3" class="w-full p-3 border rounded-xl">
                 </div>
-                <div class="space-y-2">
-                    <label class="flex items-center justify-between bg-white p-3 rounded-xl border text-sm">
-                        <span>🌿 Hedge Trim</span> <input type="checkbox" id="addHedge" onchange="calc()" class="w-5 h-5 accent-green-600">
-                    </label>
-                    <label class="flex items-center justify-between bg-white p-3 rounded-xl border text-sm">
-                        <span>✂️ Weed Whacker</span> <input type="checkbox" id="addWhacker" onchange="calc()" class="w-5 h-5 accent-green-600">
-                    </label>
-                    <label class="flex items-center justify-between bg-white p-3 rounded-xl border text-sm">
-                        <span>🤲 Hand Weed</span> <input type="checkbox" id="addWeeding" onchange="calc()" class="w-5 h-5 accent-green-600">
-                    </label>
+                <div class="space-y-2 mb-4 text-sm">
+                    <label class="flex justify-between bg-white p-3 rounded-xl border"><span>🌿 Hedge</span><input type="checkbox" id="addHedge" onchange="calc()"></label>
+                    <label class="flex justify-between bg-white p-3 rounded-xl border"><span>✂️ Whacker</span><input type="checkbox" id="addWhacker" onchange="calc()"></label>
+                    <label class="flex justify-between bg-white p-3 rounded-xl border"><span>🤲 Weeding</span><input type="checkbox" id="addWeeding" onchange="calc()"></label>
                 </div>
-                <p class="text-3xl font-black text-green-700">$<span id="suggested">0</span></p>
+                <p class="text-2xl font-black text-green-700">$<span id="suggested">0</span></p>
             </div>
 
-            <div class="bg-white p-6 rounded-3xl shadow-xl border border-slate-100 space-y-4">
-                <input type="text" id="workerName" placeholder="Worker Name" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:border-green-600">
-                <input type="text" id="clientName" placeholder="Client Name" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:border-green-600">
-                <input type="text" id="clientAddress" placeholder="Property Address" class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:border-green-600">
-                <textarea id="serviceList" rows="3" placeholder="Notes..." class="w-full p-4 bg-slate-50 border rounded-2xl outline-none focus:border-green-600"></textarea>
-                
-                <div class="relative">
-                    <span class="absolute left-4 top-4 font-bold text-slate-400">$</span>
-                    <input type="number" id="price" placeholder="Final Price (AUD)" class="w-full p-4 pl-8 bg-slate-50 border rounded-2xl font-bold text-green-700 outline-none">
-                </div>
-
-                <div class="space-y-3">
-                    <input type="password" id="pinInput" placeholder="Enter PIN to Sync (0912)" class="w-full p-4 border rounded-2xl text-center tracking-widest outline-none focus:border-green-600">
-                    <button onclick="submitJob()" id="btn" class="w-full bg-slate-800 text-white py-5 rounded-2xl font-bold text-lg hover:bg-green-800 active:scale-95 transition-all">
-                        Sync to NSLC Cloud
-                    </button>
-                </div>
+            <div class="bg-white p-6 rounded-3xl shadow-xl space-y-4">
+                <input type="text" id="workerName" placeholder="Worker" class="w-full p-4 bg-slate-50 border rounded-2xl">
+                <input type="text" id="clientName" placeholder="Client Name" class="w-full p-4 bg-slate-50 border rounded-2xl">
+                <input type="text" id="clientAddress" placeholder="Address" class="w-full p-4 bg-slate-50 border rounded-2xl">
+                <textarea id="serviceList" rows="3" placeholder="Notes..." class="w-full p-4 bg-slate-50 border rounded-2xl"></textarea>
+                <input type="number" id="price" class="w-full p-4 border rounded-2xl font-bold text-green-700">
+                <button onclick="submitJob()" id="btn" class="w-full bg-green-700 text-white py-5 rounded-2xl font-bold">Sync to Database</button>
             </div>
-        </section>
+        </div>
 
     </main>
 
     <script>
-        const MASTER_PIN = "0912"; 
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxe5BbOmFDD1wTz1j757SkNZQgGHUgCi9bE2kTPmEgFLPE82n2HsWHFnxLB8X7UhEdg/exec"; 
+        const MASTER_PIN = "0912";
+        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbxe5BbOmFDD1wTz1j757SkNZQgGHUgCi9bE2kTPmEgFLPE82n2HsWHFnxLB8X7UhEdg/exec";
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+            document.getElementById('page-' + pageId).classList.add('active');
+            
+            // UI Button styling
+            const cBtn = document.getElementById('tab-client');
+            const wBtn = document.getElementById('tab-worker');
+            if(pageId === 'client') {
+                cBtn.className = "px-4 py-2 text-[10px] font-bold uppercase rounded-lg bg-white shadow-sm text-green-700";
+                wBtn.className = "px-4 py-2 text-[10px] font-bold uppercase rounded-lg text-slate-500";
+            } else {
+                wBtn.className = "px-4 py-2 text-[10px] font-bold uppercase rounded-lg bg-white shadow-sm text-green-700";
+                cBtn.className = "px-4 py-2 text-[10px] font-bold uppercase rounded-lg text-slate-500";
+            }
+        }
+
+        function checkPin() {
+            if(document.getElementById('pinInput').value === MASTER_PIN) {
+                showPage('worker');
+            } else { alert("Wrong PIN"); }
+        }
 
         function calc() {
             const sqm = document.getElementById('sqm').value || 0;
@@ -101,15 +109,11 @@
             if(document.getElementById('addHedge').checked) total += 25;
             if(document.getElementById('addWhacker').checked) total += 15;
             if(document.getElementById('addWeeding').checked) total += 10;
-            const finalPrice = Math.round(total);
-            document.getElementById('suggested').innerText = finalPrice;
-            document.getElementById('price').value = finalPrice;
+            document.getElementById('suggested').innerText = Math.round(total);
+            document.getElementById('price').value = Math.round(total);
         }
 
         async function submitJob() {
-            if(document.getElementById('pinInput').value !== MASTER_PIN) return alert("Incorrect PIN");
-            
-            const btn = document.getElementById('btn');
             const payload = {
                 worker: document.getElementById('workerName').value,
                 name: document.getElementById('clientName').value,
@@ -117,13 +121,26 @@
                 services: document.getElementById('serviceList').value,
                 price: document.getElementById('price').value
             };
-
-            if(!payload.name || !payload.address) return alert("Missing info");
-            
-            btn.disabled = true;
-            btn.innerText = "Syncing...";
-
             try {
-                await fetch(WEB_APP_URL, {
-                    method: "POST",
-                    mode: "no-cors",
+                await fetch(WEB_APP_URL, { method: "POST", mode: "no-cors", body: JSON.stringify(payload) });
+                alert("Synced!"); location.reload();
+            } catch (e) { alert("Error!"); }
+        }
+
+        // Slider logic
+        const slider = document.getElementById('nslcSlider');
+        const handle = slider.querySelector('.slider-handle');
+        const imgAfter = slider.querySelector('.img-after');
+        function moveSlider(e) {
+            const rect = slider.getBoundingClientRect();
+            let pageX = e.pageX || (e.touches ? e.touches[0].pageX : 0);
+            let percent = ((pageX - rect.left) / rect.width) * 100;
+            percent = Math.max(0, Math.min(100, percent));
+            handle.style.left = percent + '%';
+            imgAfter.style.clipPath = `inset(0 0 0 ${percent}%)`;
+        }
+        slider.addEventListener('mousemove', moveSlider);
+        slider.addEventListener('touchmove', (e) => { moveSlider(e); e.preventDefault(); }, {passive: false});
+    </script>
+</body>
+</html>
